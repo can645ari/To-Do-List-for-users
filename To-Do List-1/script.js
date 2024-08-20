@@ -2,6 +2,7 @@ window.addEventListener('load', () => {
     const form = document.querySelector("#form");
     const input = document.querySelector("#input");
     const list_el = document.querySelector("#tasks");
+    const btn = document.querySelector("#submit");
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -29,11 +30,11 @@ window.addEventListener('load', () => {
 
         const task_edit_el = document.createElement('button');
         task_edit_el.classList.add('edit');
-        task_edit_el.innerText = 'Edit';
+        task_edit_el.innerText = 'Düzenle';
 
         const task_delete_el = document.createElement('button');
         task_delete_el.classList.add('delete');
-        task_delete_el.innerText = 'Delete';
+        task_delete_el.innerText = 'Sil';
 
         task_actions_el.appendChild(task_edit_el);
         task_actions_el.appendChild(task_delete_el);
@@ -43,14 +44,16 @@ window.addEventListener('load', () => {
         list_el.appendChild(task_el);
 
         input.value = '';
+        btn.classList.remove("active");
+        btn.disabled = true;
 
         task_edit_el.addEventListener('click', (e) => {
-            if (task_edit_el.innerText.toLowerCase() == "edit") {
-                task_edit_el.innerText = "Save";
+            if (task_edit_el.innerText.toLowerCase() == "düzenle") {
+                task_edit_el.innerText = "Kaydet";
                 task_input_el.removeAttribute("readonly");
                 task_input_el.focus();
             } else {
-                task_edit_el.innerText = "Edit";
+                task_edit_el.innerText = "Düzenle";
                 task_input_el.setAttribute("readonly", "readonly");
             }
         });
@@ -58,5 +61,16 @@ window.addEventListener('load', () => {
         task_delete_el.addEventListener('click', (e) => {
             list_el.removeChild(task_el);
         });
+    });
+
+    input.addEventListener("input", () => {
+        if (input.value !== "") {
+            btn.classList.add("active");
+            btn.disabled = false;
+        }
+        else {
+            btn.classList.remove("active");
+            btn.disabled = true;
+        }
     });
 });
